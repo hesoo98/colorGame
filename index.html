@@ -3,43 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Color Game Online</title>
+    <script src="https://cjrtnc.leaningtech.com/3.0/cj3loader.js"></script>
 </head>
-<body style="margin:0; background-color: #f0f0f0; display: flex; justify-content: center; align-items: center; height: 100vh;">
+<body style="margin:0; background-color: #222; display: flex; justify-content: center; align-items: center; height: 100vh;">
     
     <div id="container" style="width: 800px; height: 600px;"></div>
 
     <script>
-        // 1. 스크립트를 동적으로 생성하여 로드 순서를 보장합니다.
-        const script = document.createElement('script');
-        script.src = "https://cjrtnc.leaningtech.com/3.0/cj3loader.js";
-        
-        script.onload = async function() {
-            console.log("CheerpJ 로더 완료. 초기화를 시작합니다.");
+        async function startApp() {
             try {
-                // 2. 엔진 초기화
+                console.log("엔진 초기화 시작...");
+                // 2. CheerpJ 3.0 초기화
                 await cheerpjInit();
+                
+                // 3. 디스플레이 생성
                 cheerpjCreateDisplay(800, 600, document.getElementById("container"));
 
-                // 3. 파일 직접 가져오기 (404 에러 방지용)
-                const response = await fetch("colorGame-1.0-SNAPSHOT.jar");
-                if (!response.ok) throw new Error("파일을 찾을 수 없습니다 (404)");
-                
-                const buffer = await response.arrayBuffer();
-                cheerpjAddStringFile("/app/colorGame-1.0-SNAPSHOT.jar", new Uint8Array(buffer));
-
-                // 4. 실행
+                console.log("JAR 실행 시도...");
+                // 4. 실행: /app/ 가상 경로와 실제 파일명을 결합합니다.
+                // CheerpJ 3.0은 현재 페이지 위치의 JAR를 자동으로 인식합니다.
                 await cheerpjRunJar("/app/colorGame-1.0-SNAPSHOT.jar");
+                
             } catch (e) {
                 console.error("실행 오류 상세:", e);
-                document.body.innerHTML += "<p style='color:red'>오류 발생: " + e.message + "</p>";
             }
-        };
+        }
 
-        script.onerror = function() {
-            console.error("CheerpJ 로더를 불러오는 데 실패했습니다.");
-        };
-
-        document.head.appendChild(script);
+        // 페이지와 모든 리소스가 로드된 후 실행
+        window.onload = startApp;
     </script>
 </body>
 </html>
