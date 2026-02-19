@@ -6,23 +6,20 @@
     <script src="https://cjrtnc.leaningtech.com/3.0/cj3loader.js"></script>
 </head>
 <body style="margin:0; background-color: #222; display: flex; justify-content: center; align-items: center; height: 100vh;">
-    
+
     <div id="container" style="width: 800px; height: 600px;"></div>
     <script>
         async function startApp() {
             try {
                 console.log("엔진 초기화 시작...");
-                await cheerpjInit({
-                    mountFS: {
-                        "/app": "."  // 현재 경로(레포 루트)를 /app으로 마운트
-                    }
-                });
-                
+                await cheerpjInit();
+
                 cheerpjCreateDisplay(800, 600, document.getElementById("container"));
                 console.log("JAR 실행 시도...");
 
-                await cheerpjRunJar("/app/colorGame-1.0-SNAPSHOT.jar");
-                
+                // mountFS 없이 완전한 URL로 직접 지정
+                await cheerpjRunJar("https://hesoo98.github.io/colorGame/colorGame-1.0-SNAPSHOT.jar");
+
             } catch (e) {
                 console.error("실행 오류 상세:", e);
             }
