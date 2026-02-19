@@ -11,16 +11,20 @@
 
     <script>
         async function runGame() {
-            // 1. CheerpJ 3.0 초기화
-            await cheerpjInit();
-            
-            // 2. 디스플레이 영역 생성
-            cheerpjCreateDisplay(800, 600, document.getElementById("container"));
-            
-            // 3. JAR 실행 (가장 안전한 절대 경로 방식)
-            // /app/ 대신 현재 페이지 주소를 기준으로 jar 파일을 직접 호출합니다.
-            const jarPath = window.location.pathname + "colorGame-1.0-SNAPSHOT.jar";
-            await cheerpjRunJar(jarPath);
+            try {
+                // 1. CheerpJ 3.0 초기화
+                await cheerpjInit();
+                
+                // 2. 디스플레이 영역 생성
+                cheerpjCreateDisplay(800, 600, document.getElementById("container"));
+                
+                // 3. JAR 실행 (전체 URL 주소 방식)
+                // 경로 계산 에러를 방지하기 위해 전체 주소를 직접 입력합니다.
+                const fullJarUrl = "https://hesoo98.github.io/colorGame/colorGame-1.0-SNAPSHOT.jar";
+                await cheerpjRunJar(fullJarUrl);
+            } catch (e) {
+                console.error("실행 중 에러 발생:", e);
+            }
         }
         
         runGame();
