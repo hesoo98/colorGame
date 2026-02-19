@@ -3,32 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Color Game Online</title>
-    <script src="https://cjrtnc.leaningtech.com/3.0/loader.js"></script>
+    <script src="https://cjrtnc.leaningtech.com/3.0/cj3loader.js"></script>
 </head>
 <body style="margin:0; background-color: #f0f0f0; display: flex; justify-content: center; align-items: center; height: 100vh;">
     
     <div id="container" style="width: 800px; height: 600px;"></div>
 
     <script>
-        // 엔진이 로드될 때까지 기다린 후 실행하는 안전한 방식
-        window.onload = async function() {
+        // 최신 CheerpJ 3.0 실행 방식
+        async function init() {
             try {
-                // 1. 엔진 초기화
-                if (typeof cheerpjInit !== 'undefined') {
-                    await cheerpjInit();
-                    
-                    // 2. 디스플레이 영역 생성
-                    cheerpjCreateDisplay(800, 600, document.getElementById("container"));
-                    
-                    // 3. JAR 실행
-                    await cheerpjRunJar("/app/colorGame-1.0-SNAPSHOT.jar");
-                } else {
-                    console.error("CheerpJ 로더가 아직 로드되지 않았습니다.");
-                }
+                // cheerpjInit 대신 cheerpj3.init()이 쓰이기도 하지만, 
+                // 범용적인 3.0 로더 방식을 적용합니다.
+                await cheerpjInit();
+                cheerpjCreateDisplay(800, 600, document.getElementById("container"));
+                await cheerpjRunJar("/app/colorGame-1.0-SNAPSHOT.jar");
             } catch (e) {
-                console.error("게임 실행 중 오류 발생:", e);
+                console.error("실행 오류:", e);
+                // 로더가 정말 안 불려왔는지 다시 확인
+                if (typeof cheerpjInit === 'undefined') {
+                    document.body.innerHTML = "<h3>로딩 실패: 인터넷 연결이나 스크립트 주소를 확인하세요.</h3>";
+                }
             }
-        };
+        }
+        
+        // 페이지 로드 즉시 실행
+        init();
     </script>
 </body>
 </html>
