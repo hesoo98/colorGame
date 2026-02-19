@@ -1,3 +1,5 @@
+하러가기 : https://playful-donut-c2dae4.netlify.app/
+
 자바로 swing으로 구현한 색 맞추기 게임입니다.
 고득점에 도전하세요!
 
