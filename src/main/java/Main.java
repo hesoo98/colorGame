@@ -86,7 +86,7 @@ public class Main extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("같은색깔찾기");
-        setSize(800, 660);
+        setSize(800, 600);
         //setLocation(600, 300);
         setLocationRelativeTo(null); // 화면 중앙 배치
         first_panel();
