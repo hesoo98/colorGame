@@ -17,7 +17,7 @@
                 // 범용적인 3.0 로더 방식을 적용합니다.
                 await cheerpjInit();
                 cheerpjCreateDisplay(800, 600, document.getElementById("container"));
-                await cheerpjRunJar("/app/colorGame-1.0-SNAPSHOT.jar");
+                await cheerpjRunJar("colorGame-1.0-SNAPSHOT.jar");
             } catch (e) {
                 console.error("실행 오류:", e);
                 // 로더가 정말 안 불려왔는지 다시 확인
@@ -32,3 +32,4 @@
     </script>
 </body>
 </html>
+
