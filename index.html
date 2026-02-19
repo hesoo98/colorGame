@@ -10,18 +10,25 @@
     <div id="container" style="width: 800px; height: 600px;"></div>
 
     <script>
-        async function runGame() {
-            // 1. 엔진 초기화
-            await cheerpjInit();
-            
-            // 2. 디스플레이 영역 생성
-            cheerpjCreateDisplay(800, 600, document.getElementById("container"));
-            
-            // 3. JAR 실행 (경로 주의!)
-            await cheerpjRunJar("/app/colorGame-1.0-SNAPSHOT.jar");
-        }
-        
-        runGame();
+        // 엔진이 로드될 때까지 기다린 후 실행하는 안전한 방식
+        window.onload = async function() {
+            try {
+                // 1. 엔진 초기화
+                if (typeof cheerpjInit !== 'undefined') {
+                    await cheerpjInit();
+                    
+                    // 2. 디스플레이 영역 생성
+                    cheerpjCreateDisplay(800, 600, document.getElementById("container"));
+                    
+                    // 3. JAR 실행
+                    await cheerpjRunJar("/app/colorGame-1.0-SNAPSHOT.jar");
+                } else {
+                    console.error("CheerpJ 로더가 아직 로드되지 않았습니다.");
+                }
+            } catch (e) {
+                console.error("게임 실행 중 오류 발생:", e);
+            }
+        };
     </script>
 </body>
 </html>
