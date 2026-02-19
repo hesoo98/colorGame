@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Color Game - Online Play</title>
+    <script src="https://cjrtnc.leaningtech.com/3.0/loader.js"></script>
+</head>
+<body style="margin:0; background-color: #222; display: flex; justify-content: center; align-items: center; height: 100vh;">
+    
+    <div id="game-container" style="width: 800px; height: 600px;"></div>
+
+    <script>
+        async function runMyGame() {
+            // 1. CheerpJ 엔진 초기화
+            await cheerpjInit();
+            
+            // 2. 화면 표시 영역 생성
+            cheerpjCreateDisplay(800, 600, document.getElementById("game-container"));
+            
+            // 3. 내 JAR 파일 실행 
+            await cheerpjRunJar("/app/colorGame-1.0-SNAPSHOT.jar");
+        }
+        
+        runMyGame();
+    </script>
+</body>
+</html>
