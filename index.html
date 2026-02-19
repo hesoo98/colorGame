@@ -1,33 +1,22 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>Color Game Online</title>
-    <script src="https://cjrtnc.leaningtech.com/3.0/cj3loader.js"></script>
-</head>
-<body style="margin:0; background-color: #f0f0f0; display: flex; justify-content: center; align-items: center; height: 100vh;">
-    
-    <div id="container" style="width: 800px; height: 600px;"></div>
+<script>
+    async function runGame() {
+        try {
+            await cheerpjInit();
+            cheerpjCreateDisplay(800, 600, document.getElementById("container"));
 
-    <script>
-        async function runGame() {
-            try {
-                // 1. 엔진 초기화
-                await cheerpjInit();
-                
-                // 2. 화면 영역 생성
-                cheerpjCreateDisplay(800, 600, document.getElementById("container"));
-                
-                // 3. 현재 경로를 /app/에 마운트하고 실행
-                // 이 방식이 CheerpJ 3.0에서 로컬 파일을 읽는 가장 표준적인 방법입니다.
-                await cheerpjRunJar("https://hesoo98.github.io/colorGame/colorGame-1.0-SNAPSHOT.jar");
-            } catch (e) {
-                console.error("실행 오류:", e);
-            }
+            // [극단적 방법] 파일을 직접 fetch로 불러와서 CheerpJ 가상 시스템에 강제로 심습니다.
+            const response = await fetch("colorGame-1.0-SNAPSHOT.jar");
+            const blob = await response.blob();
+            const buffer = await blob.arrayBuffer();
+            
+            // 가상 파일 시스템(/app/)에 파일을 수동으로 저장
+            cheerpjAddStringFile("/app/colorGame-1.0-SNAPSHOT.jar", new Uint8Array(buffer));
+
+            // 이제 로컬에 있는 것처럼 실행합니다.
+            await cheerpjRunJar("/app/colorGame-1.0-SNAPSHOT.jar");
+        } catch (e) {
+            console.error("실행 오류 상세:", e);
         }
-        
-        runGame();
-    </script>
-</body>
-</html>
-
+    }
+    runGame();
+</script>
